@@ -15,3 +15,4 @@
         %td
           = link_to 'Show', restaurant
           = link_to 'Edit', edit_restaurant_path(restaurant)
+          = link_to 'Delete', restaurant, method: :delete, data: { confirm: 'Are you sure?' }
