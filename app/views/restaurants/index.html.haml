@@ -1,2 +1,16 @@
-%h1 Restaurants#index
-%p Find me in app/views/restaurants/index.html.haml
+%h1.title Restaurants
+
+= link_to 'New restaurant', new_restaurant_path
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Actions
+
+  %tbody
+    - @restaurants.each do |restaurant|
+      %tr
+        %td= restaurant.name
+        %td
+          = link_to 'Show', restaurant
