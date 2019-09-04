@@ -11,6 +11,20 @@
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
   %body
+    %nav.navbar
+      .container
+        .navbar-end
+          - if logged_in?
+            .navbar-item
+              = t('login.greeting', username: current_user.login)
+            .navbar-item
+              = link_to t('logout.title'), logout_path, method: :delete, class: 'button'
+          - else
+            .navbar-item
+              .buttons
+                - unless current_page?(login_path)
+                  = link_to t('login.title'), login_path, class: 'button'
+
     %section.section
       .container
         = yield

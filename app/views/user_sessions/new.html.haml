@@ -1,0 +1,31 @@
+.columns
+  .column.is-offset-3.is-6
+
+    %h1.title= t('login.title')
+
+    = form_with model: @user_session, local: true do |form|
+      - if @user_session.errors.any?
+        %article.message.is-danger
+          .message-header
+            Error
+          .message-body
+            Login failed with
+            = pluralize(@user_session.errors.count, "error")
+            .content
+              %ul
+                - @user_session.errors.full_messages.each do |msg|
+                  %li= msg
+
+      .field
+        = form.label :login, 'Username', class: 'label'
+        .control
+          = form.text_field :login, class: 'input'
+
+      .field
+        = form.label :password, class: 'label'
+        .control
+          = form.password_field :password, class: 'input'
+
+      .field.is-grouped
+        .control
+          = form.submit 'Sign in', class: 'button is-primary'

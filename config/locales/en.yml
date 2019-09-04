@@ -31,3 +31,11 @@
 
 en:
   hello: "Hello world"
+
+  login:
+    title: Login
+    greeting: "Hello, %{username}!"
+
+  logout:
+    title: Logout
+    required: You must be logged out to access that page.

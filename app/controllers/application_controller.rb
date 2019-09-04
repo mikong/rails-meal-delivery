@@ -1,2 +1,29 @@
 class ApplicationController < ActionController::Base
+  helper_method :current_user_session, :current_user, :logged_in?
+
+private
+  def current_user_session
+    return @current_user_session if defined?(@current_user_session)
+    @current_user_session = UserSession.find
+  end
+
+  def current_user
+    return @current_user if defined?(@current_user)
+    @current_user = current_user_session && current_user_session.user
+  end
+
+  def require_logout
+    if current_user
+      flash[:notice] = t('logout.required')
+      redirect_to_admin_home
+    end
+  end
+
+  def logged_in?
+    !!current_user
+  end
+
+  def redirect_to_admin_home
+    redirect_to restaurants_path
+  end
 end
