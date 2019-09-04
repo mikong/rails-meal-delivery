@@ -1,8 +1,9 @@
 %h1.title Restaurants
 
-= link_to 'New restaurant', new_restaurant_path
+.field
+  = link_to 'New restaurant', new_restaurant_path, class: "button is-link"
 
-%table
+%table.table.is-striped.is-fullwidth
   %thead
     %tr
       %th Name
@@ -13,6 +14,13 @@
       %tr
         %td= restaurant.name
         %td
-          = link_to 'Show', restaurant
-          = link_to 'Edit', edit_restaurant_path(restaurant)
-          = link_to 'Delete', restaurant, method: :delete, data: { confirm: 'Are you sure?' }
+          %p.buttons
+            = link_to restaurant, class: "button" do
+              %span.icon.is-small
+                %i.far.fa-eye
+            = link_to edit_restaurant_path(restaurant), class: "button" do
+              %span.icon.is-small
+                %i.far.fa-edit
+            = link_to restaurant, method: :delete, data: { confirm: 'Are you sure?' }, class: "button" do
+              %span.icon.is-small
+                %i.far.fa-trash-alt

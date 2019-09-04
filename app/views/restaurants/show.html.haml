@@ -1,5 +1,6 @@
 %h1.title= @restaurant.name
 
-= link_to 'Edit', edit_restaurant_path(@restaurant)
-|
-= link_to 'Back to List', restaurants_path
+.field.is-grouped
+  .buttons.are-small
+    = link_to 'Edit Restaurant', edit_restaurant_path(@restaurant), class: 'button'
+    = link_to 'Back to List', restaurants_path, class: 'button'
