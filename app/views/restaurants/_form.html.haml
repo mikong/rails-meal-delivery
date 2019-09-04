@@ -1,4 +1,15 @@
 = form_with model: @restaurant, local: true do |form|
+  - if @restaurant.errors.any?
+    %article.message.is-danger
+      .message-header
+        Error
+      .message-body
+        = pluralize(@restaurant.errors.count, "error")
+        prohibited this restaurant from being saved:
+        .content
+          %ul
+            - @restaurant.errors.full_messages.each do |msg|
+              %li= msg
 
   .field
     = form.label :name, class: 'label'
