@@ -1,3 +1,5 @@
 %h1.title= @restaurant.name
 
+= link_to 'Edit', edit_restaurant_path(@restaurant)
+|
 = link_to 'Back to List', restaurants_path
