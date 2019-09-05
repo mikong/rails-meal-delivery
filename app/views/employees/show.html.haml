@@ -1,0 +1,8 @@
+%h1.title= @employee.name
+- if @employee.job_title.present?
+  %p.subtitle= @employee.job_title
+
+.field.is-grouped
+  .buttons.are-small
+    = link_to 'Edit Employee', edit_employee_path(@employee), class: 'button'
+    = link_to 'Back to List', employees_path, class: 'button'

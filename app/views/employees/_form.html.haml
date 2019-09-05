@@ -1,0 +1,28 @@
+= form_with model: @employee, local: true do |form|
+  - if @employee.errors.any?
+    %article.message.is-danger
+      .message-header
+        Error
+      .message-body
+        = pluralize(@employee.errors.count, "error")
+        prohibited this employee from being saved:
+        .content
+          %ul
+            - @employee.errors.full_messages.each do |msg|
+              %li= msg
+
+  .field
+    = form.label :name, class: 'label'
+    .control
+      = form.text_field :name, class: 'input'
+
+  .field
+    = form.label :job_title, class: 'label'
+    .control
+      = form.text_field :job_title, class: 'input'
+
+  .field.is-grouped
+    .control
+      = form.submit class: 'button is-primary'
+    .control
+      = link_to 'Back', employees_path, class: 'button'

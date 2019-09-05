@@ -1,0 +1,28 @@
+%h1.title Employees
+
+.field
+  = link_to 'New employee', new_employee_path, class: "button is-link"
+
+%table.table.is-striped.is-fullwidth
+  %thead
+    %tr
+      %th Name
+      %th Job Title
+      %th Actions
+
+  %tbody
+    - @employees.each do |employee|
+      %tr
+        %td= employee.name
+        %td= employee.job_title
+        %td
+          %p.buttons
+            = link_to employee, class: "button" do
+              %span.icon.is-small
+                %i.far.fa-eye
+            = link_to edit_employee_path(employee), class: "button" do
+              %span.icon.is-small
+                %i.far.fa-edit
+            = link_to employee, method: :delete, data: { confirm: 'Are you sure?' }, class: "button" do
+              %span.icon.is-small
+                %i.far.fa-trash-alt
