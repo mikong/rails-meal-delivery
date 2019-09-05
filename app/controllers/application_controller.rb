@@ -12,6 +12,13 @@ private
     @current_user = current_user_session && current_user_session.user
   end
 
+  def require_login
+    unless current_user
+      flash[:notice] = t('login.required')
+      redirect_to login_path
+    end
+  end
+
   def require_logout
     if current_user
       flash[:notice] = t('logout.required')
