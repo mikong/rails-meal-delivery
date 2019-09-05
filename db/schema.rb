@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_05_070043) do
+ActiveRecord::Schema.define(version: 2019_09_05_135637) do
 
   create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -35,6 +35,16 @@ ActiveRecord::Schema.define(version: 2019_09_05_070043) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "taggings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "restaurant_id"
+    t.bigint "tag_id"
+    t.integer "taggings_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_taggings_on_restaurant_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
 
   create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -65,4 +75,6 @@ ActiveRecord::Schema.define(version: 2019_09_05_070043) do
 
   add_foreign_key "menu_items", "restaurants"
   add_foreign_key "menu_items", "tags"
+  add_foreign_key "taggings", "restaurants"
+  add_foreign_key "taggings", "tags"
 end
