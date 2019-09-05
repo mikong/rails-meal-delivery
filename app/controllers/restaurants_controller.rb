@@ -43,6 +43,7 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.find(params[:id])
     @restaurant.destroy
 
+    flash[:notice] = t('flash.destroy', resource: Restaurant.model_name.human)
     redirect_to restaurants_path
   end
 

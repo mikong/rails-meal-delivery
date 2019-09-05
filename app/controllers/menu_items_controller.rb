@@ -38,6 +38,7 @@ class MenuItemsController < ApplicationController
     @menu_item = @restaurant.menu_items.find(params[:id])
     @menu_item.destroy
 
+    flash[:notice] = t('flash.destroy', resource: MenuItem.model_name.human)
     redirect_to @restaurant
   end
 
