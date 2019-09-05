@@ -27,4 +27,10 @@
 
     %section.section
       .container
+        - [:notice, :error].each do |type|
+          - if flash[type]
+            - message = flash[type]
+            %article.message
+              .message-body
+                = message
         = yield
