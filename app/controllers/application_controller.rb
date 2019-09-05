@@ -31,6 +31,6 @@ private
   end
 
   def redirect_to_admin_home
-    redirect_to restaurants_path
+    redirect_to root_path
   end
 end

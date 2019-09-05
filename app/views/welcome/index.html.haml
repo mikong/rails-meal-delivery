@@ -1,0 +1,13 @@
+%h1.title.is-1 Administration
+
+.tile.is-ancestor
+  .tile.is-12
+    = render partial: 'tile', locals: { title: "Manage Restaurants and Menu Items", path: restaurants_path, icon: "fa-utensils" }
+
+    = render partial: 'tile', locals: { title: "Manage Employees", path: employees_path, icon: "fa-users" }
+
+.tile.is-ancestor
+  .tile.is-12
+    = render partial: 'tile', locals: { title: "Random Lunch", path: root_path, icon: "fa-dice"}
+
+    = render partial: 'tile', locals: { title: "Paid Lunch", path: root_path, icon: "fa-search-dollar" }

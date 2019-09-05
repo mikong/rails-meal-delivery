@@ -14,7 +14,7 @@
     %nav.navbar
       .container
         .navbar-brand
-          = link_to restaurants_path, class: 'navbar-item' do
+          = link_to root_path, class: 'navbar-item' do
             %h4.title.is-4= t('site.title')
         .navbar-end
           - if logged_in?

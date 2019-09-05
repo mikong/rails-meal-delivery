@@ -9,7 +9,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(user_session_params.to_h)
 
     if @user_session.save
-      redirect_to restaurants_path
+      redirect_to_admin_home
     else
       render 'new'
     end
