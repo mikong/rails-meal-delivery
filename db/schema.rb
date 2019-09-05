@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_05_040550) do
+ActiveRecord::Schema.define(version: 2019_09_05_042946) do
+
+  create_table "menu_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.bigint "tag_id"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "SGD", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_menu_items_on_tag_id"
+  end
 
   create_table "restaurants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -44,4 +54,5 @@ ActiveRecord::Schema.define(version: 2019_09_05_040550) do
     t.index ["persistence_token"], name: "index_users_on_persistence_token", unique: true
   end
 
+  add_foreign_key "menu_items", "tags"
 end
