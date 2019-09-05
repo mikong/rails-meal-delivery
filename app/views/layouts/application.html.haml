@@ -3,7 +3,7 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1"}
-    %title RailsMealDelivery
+    %title= t('site.title')
     %link{:rel => :stylesheet, :href => "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"}
     %script{:defer => "defer", :src => "https://use.fontawesome.com/releases/v5.9.0/js/all.js"}
     = csrf_meta_tags
@@ -13,6 +13,9 @@
   %body
     %nav.navbar
       .container
+        .navbar-brand
+          = link_to restaurants_path, class: 'navbar-item' do
+            %h4.title.is-4= t('site.title')
         .navbar-end
           - if logged_in?
             .navbar-item
