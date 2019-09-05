@@ -4,3 +4,33 @@
   .buttons.are-small
     = link_to 'Edit Restaurant', edit_restaurant_path(@restaurant), class: 'button'
     = link_to 'Back to List', restaurants_path, class: 'button'
+
+%hr
+
+%h2.title.is-4 Menu Items
+
+.field
+  = link_to 'New Menu Item', new_restaurant_menu_item_path(@restaurant), class: "button is-link"
+
+%table.table.is-striped.is-fullwidth
+  %thead
+    %tr
+      %th Name
+      %th Price (in SGD)
+      %th Tag
+      %th Actions
+
+  %tbody
+    - @menu_items.each do |menu_item|
+      %tr
+        %td= menu_item.name
+        %td= humanized_money_with_symbol menu_item.price
+        %td= menu_item.tag.name
+        %td
+          %p.buttons
+            = link_to edit_restaurant_menu_item_path(@restaurant, menu_item), class: "button" do
+              %span.icon.is-small
+                %i.far.fa-edit
+            = link_to restaurant_menu_item_path(@restaurant, menu_item), method: :delete, data: { confirm: 'Are you sure?' }, class: "button" do
+              %span.icon
+                %i.far.fa-trash-alt

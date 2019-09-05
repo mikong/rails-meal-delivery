@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :restaurants
+  resources :restaurants do
+    resources :menu_items, except: [:index, :show]
+  end
   
   resources :user_sessions, only: [:create]
   delete '/logout', to: 'user_sessions#destroy', as: 'logout'

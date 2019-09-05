@@ -1,0 +1,34 @@
+= form_with model: [@restaurant, @menu_item], local: true do |form|
+  - if @menu_item.errors.any?
+    %article.message.is-danger
+      .message-header
+        Error
+      .message-body
+        = pluralize(@menu_item.errors.count, "error")
+        prohibited this menu item from being saved:
+        .content
+          %ul
+            - @menu_item.errors.full_messages.each do |msg|
+              %li= msg
+
+  .field
+    = form.label :name, class: 'label'
+    .control
+      = form.text_field :name, class: 'input'
+
+  .field
+    = form.label :price, class: 'label'
+    .control
+      = form.text_field :price, class: 'input'
+
+  .field
+    = form.label :tag, class: 'label'
+    .control
+      .select
+        = form.select :tag_id, Tag.all.collect {|t| [t.name, t.id]}
+
+  .field.is-grouped
+    .control
+      = form.submit class: 'button is-primary'
+    .control
+      = link_to 'Back', @restaurant, class: 'button'
