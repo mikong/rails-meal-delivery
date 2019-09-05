@@ -1,0 +1,12 @@
+%h1.title Paid Lunch
+
+.field
+  = link_to 'New search', new_paid_lunch_path, class: "button is-link"
+
+%h2.title.is-4 Results
+
+.content
+  %ul
+    - @restaurants.each do |restaurant|
+      %li
+        = restaurant.name

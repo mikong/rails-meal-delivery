@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   resource :random_lunch, only: [:new]
   post '/random_lunch', to: 'random_lunches#search'
+  resource :paid_lunch, only: [:new]
+  post '/paid_lunch', to: 'paid_lunches#search'
   
   resources :user_sessions, only: [:create]
   delete '/logout', to: 'user_sessions#destroy', as: 'logout'

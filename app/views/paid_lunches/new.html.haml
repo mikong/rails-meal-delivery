@@ -1,0 +1,17 @@
+%h1.title Paid Lunch
+
+= form_with url: paid_lunch_path, local: true do |form|
+  .field
+    = form.label :budget, class: 'label'
+    .control
+      = form.text_field :budget, class: 'input', value: "100.00"
+
+  - Tag.all.each do |t|
+    .field
+      = form.label t.name, class: 'label'
+      .control
+        = form.text_field "tag_ids[#{t.id}]", class: 'input', value: "0"
+
+  .field
+    .control
+      = form.submit "Search", class: 'button is-primary'
