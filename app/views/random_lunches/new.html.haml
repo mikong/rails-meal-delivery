@@ -1,0 +1,12 @@
+%h1.title Random Lunch
+
+= form_with url: random_lunch_path, local: true do |form|
+  .field
+    = form.label :tags, class: 'label'
+    .control
+      = form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b|
+        = b.label(class: "checkbox") { b.check_box + "\n" + b.text }
+
+  .field
+    .control
+      = form.submit "Search", class: 'button is-primary'

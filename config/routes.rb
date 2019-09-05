@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     resources :menu_items, except: [:index, :show]
   end
   resources :employees
+
+  resource :random_lunch, only: [:new]
+  post '/random_lunch', to: 'random_lunches#search'
   
   resources :user_sessions, only: [:create]
   delete '/logout', to: 'user_sessions#destroy', as: 'logout'
