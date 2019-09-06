@@ -5,8 +5,15 @@ class PaidLunchesController < ApplicationController
   end
 
   def search
-    @restaurants = PaidLunchQuery.new(params).call
+    @restaurants = PaidLunchQuery.new(search_params).call
 
     render 'search'
   end
+
+private
+
+  def search_params
+    params.permit(:budget, tag_quantities: {})
+  end
+
 end
