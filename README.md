@@ -41,7 +41,7 @@ credentials. Then, create the database, load the schema and the seed data:
 
 ```bash
 # create the database
-$ rails db create
+$ rails db:create
 
 # load the schema
 $ rails db:schema:load
