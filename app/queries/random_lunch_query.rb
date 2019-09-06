@@ -4,6 +4,10 @@ class RandomLunchQuery
   end
 
   def call
-    Restaurant.includes(:taggings).where(taggings: { tag_id: @tag_ids}).references(:taggings)
+    base_query = Restaurant.includes(:taggings).references(:taggings)
+
+    @tag_ids.reduce(Restaurant.all) do |scope, tid|
+      scope.where(id: base_query.where(taggings: { tag_id: tid }).select(:id))
+    end
   end
 end
