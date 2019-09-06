@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_05_135637) do
+ActiveRecord::Schema.define(version: 2019_09_06_061048) do
 
   create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 2019_09_05_135637) do
     t.integer "taggings_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "lowest_price_cents", default: 0, null: false
+    t.string "lowest_price_currency", default: "SGD", null: false
     t.index ["restaurant_id"], name: "index_taggings_on_restaurant_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
