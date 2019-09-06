@@ -11,3 +11,14 @@ if Tag.count == 0
     Tag.create(name: name)
   end  
 end
+
+if Rails.env.development?
+  if User.count == 0
+    User.create(
+      login: "admin",
+      email: "admin@example.com",
+      password: "audiences5-quislings",
+      password_confirmation: "audiences5-quislings"
+    )
+  end
+end

@@ -46,7 +46,7 @@ $ rails db create
 # load the schema
 $ rails db:schema:load
 
-# load the seed data (tags)
+# load the seed data (tags and admin user)
 $ rails db:seed
 ```
 
@@ -62,7 +62,13 @@ Start the Rails server:
 $ rails s
 ```
 
-Access the site on your browser at http://localhost:3000.
+Access the site on your browser at http://localhost:3000. Login using the
+admin user with the following default credentials (defined in `db/seeds.rb`):
+
+```
+login: admin
+password: audiences5-quislings
+```
 
 [ruby]: https://www.ruby-lang.org/en/documentation/installation/
 [bundler]: http://bundler.io
