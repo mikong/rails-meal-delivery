@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 2019_09_06_061048) do
     t.datetime "updated_at", null: false
     t.integer "lowest_price_cents", default: 0, null: false
     t.string "lowest_price_currency", default: "SGD", null: false
+    t.bigint "lowest_item_id"
+    t.index ["lowest_item_id"], name: "index_taggings_on_lowest_item_id"
     t.index ["restaurant_id"], name: "index_taggings_on_restaurant_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
