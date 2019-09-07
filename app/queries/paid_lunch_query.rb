@@ -1,11 +1,7 @@
 class PaidLunchQuery
   def initialize(params = {})
-    @budget = Money.from_amount(params[:budget].to_f)
-    @tag_quantities = params[:tag_quantities].to_hash.reduce({}) do |h, (k, v)|
-      value = v.to_i
-      h[k] = value  if value > 0
-      h
-    end
+    @budget = params[:budget] # TODO: validate Money
+    @tag_quantities = params[:tag_quantities]
   end
 
   def call
@@ -14,10 +10,9 @@ class PaidLunchQuery
     restaurants.select do |restaurant|
       sum = Money.new(0)
       @tag_quantities.each do |tid, quantity|
-        cheapest = restaurant.menu_items
-          .where(tag_id: tid)
-          .order(:price_cents)
-          .first
+        cheapest = restaurant.cheapest_menu_item_by(tid)
+
+        # next  if cheapest.nil?
         sum += cheapest.price * quantity
       end
 
