@@ -143,6 +143,11 @@ the `tagging` table, it simply fetches the menu item by ID. With the cheapest
 menu items' prices, count for each tag, and budget, the restaurants are
 filtered and the final list of restaurants is obtained.
 
+Even if menu items are fetched by ID, there's still a lot of database queries in
+this implementation. The calculation of whether the restaurant fits the budget
+can be moved to the query and reduce the number of database calls as a future
+optimization.
+
 **Paid Lunch with Employees**
 
 I also implemented a Paid Lunch page where you select the group of employees by
@@ -156,11 +161,74 @@ for each tag.
 
 ### 5. Others
 
-TODO
+**Architecture Diagram**
 
-## Scaling to Over 100k Employees
+Here's the web application architecture diagram of the deployed demo app:
 
-TODO
+![Architecture Diagram][architecture]
+
+## Serving Over 100k Employees
+
+If the system needs to serve over 100k employees, there are several aspects to
+consider.
+
+**Multiple Locations**
+
+A company with over 100k employees is likely not in one location. For example,
+Microsoft Redmond campus is estimated to have 30,000 - 40,000 employees.
+
+The employees, restaurants and its menu items will be different for the
+different locations. One solution may be to deploy the application in multiple
+locations preferrably on servers on site or to the closest datacenter of a cloud
+service.
+
+If the system is used in different countries, the application needs to be
+localized to have the proper currency and language. The application already uses
+the money-rails library to support different currencies.
+
+**Number of Employee Records**
+
+The Random Lunch and Paid Lunch use cases above have alternative simpler UI that
+doesn't require employees in searching restaurants. If this is acceptable to the
+users of the system, then there's no need to have tens of thousands of employee
+records in the system. Otherwise, if the users require selecting employees for
+every search, then the current implementation of Random Lunch with Employees or
+Paid Lunch with Employees where all employees are loaded on the form isn't
+practical. We can change the form to have an employee search to find and
+dynamically add employees one by one to the form.
+
+If the company has over 100k employees, maintaining the employee records
+manually is impractical. The company likely has another system where employee
+records are maintained. The system can adopt a microservices architecture where
+employee records are fetched via API. If it's not possible to fetch these
+records on demand and our application needs to maintain its own copy of the
+records, then an event-driven architecture can be adopted where changes in the
+employee records are logged as events, and our application can observe these
+events to update employee records.
+
+**Web Application Architecture**
+
+As for the web application architecture, the single server setup in the
+architecture diagram above likely has to change if the system needs to support a
+lot more users. The db server can be separate from the app servers and a load
+balancer can be added to distribute requests to the app servers.
+
+For each location, the users will access the system at around the same time
+(during lunch), and auto-scaling can be used to reduce the number of app servers
+during periods of low traffic and bring them back online before the next lunch.
+
+**Performance Monitoring**
+
+There's a lot of guesswork in the above recommendations. Ultimately, performance
+testing and monitoring is needed to figure out the right changes to the design
+and architecture of the system.
+
+It's quite possible that even with over 100k employees, we may not need a lot of
+server capacity. In a location with 30,000 employees, if only half the employees
+use the system and will eat in groups of 5 on average, only 3,000 admins will be
+accessing the application. Requests can be spread out in a 2 hour period. And
+even with so many employees, the number of restaurants and menu items are not in
+the same order of magnitude.
 
 ## Local Setup
 
@@ -236,3 +304,4 @@ password: audiences5-quislings
 [bundler]: http://bundler.io
 [git]: https://git-scm.com/
 [diagram-schema]: /doc/diagrams/diagram-schema.png
+[architecture]: /doc/diagrams/diagram-architecture.png
