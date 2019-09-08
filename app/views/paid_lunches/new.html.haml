@@ -2,15 +2,19 @@
 
 = form_with url: paid_lunch_path, local: true do |form|
   .field
-    = form.label :budget, class: 'label'
-    .control
-      = form.text_field :budget, class: 'input', value: "100.00"
-
-  - Tag.all.each do |t|
-    .field
-      = form.label t.name, class: 'label'
+    = form.label :budget, t('paid_lunch.budget'), class: 'label'
+    .field.has-addons
       .control
-        = form.text_field "tag_quantities[#{t.id}]", class: 'input', value: "0"
+        %a.button.is-static
+          = Money.default_currency.symbol
+      .control
+        = form.text_field :budget, class: 'input', value: "100.00"
+
+  - Tag.all.each do |tag|
+    .field
+      = form.label tag.name, class: 'label'
+      .control
+        = form.text_field "tag_quantities[#{tag.id}]", class: 'input', value: "0"
 
   .field
     .control

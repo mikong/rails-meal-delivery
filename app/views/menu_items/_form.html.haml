@@ -18,8 +18,12 @@
 
   .field
     = form.label :price, class: 'label'
-    .control
-      = form.text_field :price, class: 'input'
+    .field.has-addons
+      .control
+        %a.button.is-static
+          = Money.default_currency.symbol
+      .control
+        = form.text_field :price, class: 'input'
 
   .field
     = form.label :tag, class: 'label'

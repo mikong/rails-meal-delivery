@@ -44,3 +44,11 @@ en:
 
   flash:
     destroy: "%{resource} was successfully deleted."
+
+  paid_lunch:
+    budget: Budget (in SGD)
+
+  activerecord:
+    attributes:
+      menu_item:
+        price: Price (in SGD)
