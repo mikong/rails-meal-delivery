@@ -1,0 +1,23 @@
+%h2.title.is-4 Results
+
+- if restaurants.any?
+
+  .content
+    %ul
+      - restaurants.each do |restaurant|
+        %li
+          = link_to restaurant.name, restaurant
+          %ul
+            - tag_quantities.each do |tid, quantity|
+              %li
+                = quantity
+                x
+                - menu_item = restaurant.cheapest_menu_item_by(tid)
+                = menu_item.name
+                = menu_item.price.format(with_currency: true)
+
+- else
+
+  %article.message.is-large
+    .message-body
+      No restaurants matched.

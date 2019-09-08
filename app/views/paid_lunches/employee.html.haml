@@ -1,0 +1,46 @@
+%h1.title Paid Lunch
+
+- if @employees.any?
+
+  = form_with url: paid_lunch_employee_path, local: true do |form|
+    .field.is-horizontal
+      .field-label.is-normal
+        = form.label :budget, t('paid_lunch.budget'), class: 'label'
+      .field-body
+        .field.has-addons
+          .control
+            %a.button.is-static
+              = Money.default_currency.symbol
+          .control
+            = form.text_field :budget, class: 'input', value: "100.00"
+
+    .content
+      %p
+        Please select preferences for employees having lunch:
+
+    - @employees.each do |employee|
+
+      .field.is-horizontal
+        .field-label.is-normal
+          %label.label= employee.name
+        .field-body
+          .field
+            .control
+              .select
+                %select{ name: "tag_ids[]" }
+                  %option{ value: "" } Having lunch?
+                  = options_from_collection_for_select(@tags, :id, :name)
+
+    .field.is-horizontal
+      .field-label
+      .field-body
+        .field
+          .control
+            = form.submit "Search", class: 'button is-primary'
+
+- else
+
+  %article.message.is-large
+    .message-body
+      No employees found. Go to
+      = link_to "Manage Employees", employees_path

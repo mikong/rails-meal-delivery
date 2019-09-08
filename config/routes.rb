@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   resource :paid_lunch, only: [:new]
   post '/paid_lunch', to: 'paid_lunches#search'
+  get '/paid_lunch/employee', to: 'paid_lunches#employee'
+  post '/paid_lunch/employee', to: 'paid_lunches#employee_search'
   
   resources :user_sessions, only: [:create]
   delete '/logout', to: 'user_sessions#destroy', as: 'logout'
