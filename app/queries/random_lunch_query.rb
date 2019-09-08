@@ -1,6 +1,6 @@
 class RandomLunchQuery
   def initialize(params = {})
-    @tag_ids = params[:tag_ids].delete_if {|e| e.empty?}
+    @tag_ids = params[:tag_ids].delete_if {|e| e.empty?}.uniq
   end
 
   def call

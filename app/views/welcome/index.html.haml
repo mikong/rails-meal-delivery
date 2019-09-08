@@ -8,6 +8,9 @@
 
 .tile.is-ancestor
   .tile.is-12
-    = render partial: 'tile', locals: { title: "Random Lunch", path: new_random_lunch_path, icon: "fa-dice"}
+    = render partial: 'tile', locals: { title: "Random Lunch (Simple)", path: new_random_lunch_path, icon: "fa-dice"}
+    = render partial: 'tile', locals: { title: "Random Lunch with Employees", path: random_lunch_employee_path, icon: "fa-dice" }
 
-    = render partial: 'tile', locals: { title: "Paid Lunch", path: new_paid_lunch_path, icon: "fa-search-dollar" }
+.tile.is-ancestor
+  .tile.is-12
+    = render partial: 'tile', locals: { title: "Paid Lunch (Simple)", path: new_paid_lunch_path, icon: "fa-search-dollar" }

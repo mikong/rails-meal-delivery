@@ -9,4 +9,15 @@ class RandomLunchesController < ApplicationController
 
     render 'search'
   end
+
+  def employee
+    @employees = Employee.all
+    @tags = Tag.all
+  end
+
+  def employee_search
+    @restaurants = RandomLunchQuery.new(params).call
+
+    render 'employee_search'
+  end
 end

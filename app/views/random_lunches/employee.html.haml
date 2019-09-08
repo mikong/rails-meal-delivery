@@ -1,0 +1,32 @@
+%h1.title Random Lunch
+
+- if @employees.any?
+
+  .content
+    %p
+      Please select preferences for employees having lunch:
+
+  = form_with url: random_lunch_employee_path, local: true do |form|
+
+    - @employees.each do |employee|
+
+      .field.is-horizontal
+        .field-label
+          %label.label= employee.name
+        .field-body
+          .field
+            .control
+              %select.select{ name: "tag_ids[]" }
+                %option{ value: "" } Having lunch?
+                = options_from_collection_for_select(@tags, :id, :name)
+
+    .field
+      .control
+        = form.submit "Search", class: 'button is-primary'
+
+- else
+
+  %article.message.is-large
+    .message-body
+      No employees found. Go to
+      = link_to "Manage Employees", employees_path
