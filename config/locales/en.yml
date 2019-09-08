@@ -45,6 +45,9 @@ en:
   flash:
     destroy: "%{resource} was successfully deleted."
 
+  lunch:
+    not_eating: Not eating
+
   paid_lunch:
     budget: Budget (in SGD)
 

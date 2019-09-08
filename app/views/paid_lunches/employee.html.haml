@@ -28,7 +28,7 @@
             .control
               .select
                 %select{ name: "tag_ids[]" }
-                  %option{ value: "" } Having lunch?
+                  %option{ value: "" }= t('lunch.not_eating')
                   = options_from_collection_for_select(@tags, :id, :name)
 
     .field.is-horizontal
