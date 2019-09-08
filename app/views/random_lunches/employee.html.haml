@@ -11,18 +11,22 @@
     - @employees.each do |employee|
 
       .field.is-horizontal
-        .field-label
+        .field-label.is-normal
           %label.label= employee.name
         .field-body
           .field
             .control
-              %select.select{ name: "tag_ids[]" }
-                %option{ value: "" }= t('lunch.not_eating')
-                = options_from_collection_for_select(@tags, :id, :name)
+              .select
+                %select{ name: "tag_ids[]" }
+                  %option{ value: "" }= t('lunch.not_eating')
+                  = options_from_collection_for_select(@tags, :id, :name)
 
-    .field
-      .control
-        = form.submit "Search", class: 'button is-primary'
+    .field.is-horizontal
+      .field-label
+      .field-body
+        .field
+          .control
+            = form.submit "Search", class: 'button is-primary'
 
 - else
 
