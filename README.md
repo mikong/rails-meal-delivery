@@ -1,4 +1,28 @@
-# README
+# Meal Delivery
+
+Meal Delivery is a programming exercise:
+
+> Your company decided to build their internal team-lunch system to provide its
+> employees with the ability to schedule lunches with each other at restaurants
+> around the office that accommodate their dietary needs. The system
+> administrator populates the system with restaurants around the office. For
+> each restaurant, there exists multiple menu items. Each menu item has a name,
+> a price (in SGD), and a tag (Any of the following values: Vegetarian, Vegan,
+> Meat, Fish or Chicken).
+
+## System Use Cases
+
+### 1. Restaurant and Menu Item Management
+
+![Schema Diagram][diagram-schema]
+
+### 2. Employee Management
+
+### 3. Random Lunch
+
+### 4. Paid Lunch
+
+### 5. Others
 
 ## Local Setup
 
@@ -73,3 +97,4 @@ password: audiences5-quislings
 [ruby]: https://www.ruby-lang.org/en/documentation/installation/
 [bundler]: http://bundler.io
 [git]: https://git-scm.com/
+[diagram-schema]: /doc/diagrams/diagram-schema.png
