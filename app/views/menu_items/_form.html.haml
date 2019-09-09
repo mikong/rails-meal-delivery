@@ -29,7 +29,7 @@
     = form.label :tag, class: 'label'
     .control
       .select
-        = form.select :tag_id, Tag.all.collect {|t| [t.name, t.id]}
+        = form.select :tag_id, @tags.collect {|t| [t.name, t.id]}
 
   .field.is-grouped
     .control

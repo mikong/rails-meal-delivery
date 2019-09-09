@@ -12,7 +12,7 @@
         .control
           = form.text_field :budget, class: 'input', value: "100.00"
 
-  - Tag.all.each do |tag|
+  - @tags.each do |tag|
     .field.is-horizontal
       .field-label.is-normal
         = form.label tag.name, class: 'label'

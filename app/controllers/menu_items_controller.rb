@@ -4,11 +4,13 @@ class MenuItemsController < ApplicationController
   def new
     @restaurant = Restaurant.find(params[:restaurant_id])
     @menu_item = @restaurant.menu_items.build
+    @tags = Tag.all
   end
 
   def edit
     @restaurant = Restaurant.find(params[:restaurant_id])
     @menu_item = @restaurant.menu_items.find(params[:id])
+    @tags = Tag.all
   end
 
   def create

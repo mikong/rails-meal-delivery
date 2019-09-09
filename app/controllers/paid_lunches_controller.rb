@@ -2,6 +2,7 @@ class PaidLunchesController < ApplicationController
   before_action :require_login
 
   def new
+    @tags = Tag.all
   end
 
   def search
