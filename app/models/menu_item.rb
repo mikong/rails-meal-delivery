@@ -8,7 +8,7 @@ class MenuItem < ApplicationRecord
 
   after_create :increment_tagging, :add_lowest_price
   after_destroy :decrement_tagging
-  after_update :check_tagging
+  after_update :check_tagging, :update_lowest_price
 
   def find_restaurant_tagging
     Tagging.find_by(restaurant: self.restaurant, tag: self.tag)
@@ -68,5 +68,16 @@ class MenuItem < ApplicationRecord
       if tagging.lowest_price > self.price
         tagging.update(lowest_price: self.price, lowest_item: self)
       end
+    end
+
+    def update_lowest_price
+      tagging = find_restaurant_tagging
+
+      cheapest = self.restaurant.menu_items
+        .where(tag_id: self.tag.id)
+        .order(:price_cents)
+        .first
+
+      tagging.update(lowest_price: cheapest.price, lowest_item: cheapest)
     end
 end
