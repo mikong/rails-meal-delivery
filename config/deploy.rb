@@ -45,7 +45,7 @@ task :setup do
   command %{touch "#{fetch(:shared_path)}/config/database.yml"}
 end
 
-# desc "First deploy only: git clone, shared paths, bundle install"
+# desc 'First deploy only: git clone, shared paths, bundle install'
 # task :first_deploy do
 #   deploy do
 #     invoke :'git:clone'
@@ -56,7 +56,7 @@ end
 #   end
 # end
 
-desc "Deploys the current version to the server."
+desc 'Deploys the current version to the server.'
 task :deploy do
   deploy do
     invoke :'git:clone'

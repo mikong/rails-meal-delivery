@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :email,
     format: {
       with: /@/,
-      message: "should look like an email address."
+      message: 'should look like an email address.'
     },
     length: { maximum: 100 },
     uniqueness: {
@@ -17,7 +17,7 @@ class User < ApplicationRecord
   validates :login,
     format: {
       with: /\A[a-z0-9]+\z/,
-      message: "should use only letters and numbers."
+      message: 'should use only letters and numbers.'
     },
     length: { within: 3..100 },
     uniqueness: {
