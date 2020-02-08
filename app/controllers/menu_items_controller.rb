@@ -46,10 +46,9 @@ class MenuItemsController < ApplicationController
     redirect_to @restaurant
   end
 
-private
+  private
 
   def menu_item_params
     params.require(:menu_item).permit(:name, :price, :tag_id)
   end
-
 end

@@ -22,7 +22,8 @@ class UserSessionsController < ApplicationController
     redirect_to login_path
   end
 
-private
+  private
+
   def user_session_params
     params.require(:user_session).permit(:login, :password)
   end

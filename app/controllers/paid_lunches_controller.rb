@@ -38,7 +38,7 @@ class PaidLunchesController < ApplicationController
     render 'employee_search'
   end
 
-private
+  private
 
   def search_params
     params.permit(:budget, tag_ids: [], tag_quantities: {})
@@ -51,7 +51,7 @@ private
   def tag_quantities
     search_params[:tag_quantities].to_hash.reduce({}) do |h, (k, v)|
       value = v.to_i
-      h[k] = value  if value > 0
+      h[k] = value if value > 0
       h
     end
   end
@@ -65,5 +65,4 @@ private
       h
     end
   end
-
 end

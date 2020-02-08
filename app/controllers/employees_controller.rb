@@ -47,10 +47,9 @@ class EmployeesController < ApplicationController
     redirect_to employees_path
   end
 
-private
+  private
 
   def employee_params
     params.require(:employee).permit(:name, :job_title)
   end
-
 end

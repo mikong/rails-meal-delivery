@@ -7,6 +7,12 @@ AllCops:
 Bundler/OrderedGems:
   Enabled: false
 
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
