@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MenuItemsController < ApplicationController
   before_action :require_login
 

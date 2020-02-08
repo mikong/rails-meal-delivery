@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Restaurant < ApplicationRecord
   has_many :menu_items, dependent: :delete_all
   has_many :taggings, dependent: :destroy

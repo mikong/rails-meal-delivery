@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PaidLunchQuery
   def initialize(params = {})
     @budget = params[:budget] # TODO: validate Money
