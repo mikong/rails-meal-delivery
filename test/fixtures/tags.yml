@@ -1,7 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
+meat:
+  name: Meat
 
-two:
-  name: MyString
+chicken:
+  name: Chicken
+
+fish:
+  name: Fish
+
+vegetarian:
+  name: Vegetarian
+
+vegan:
+  name: Vegan
