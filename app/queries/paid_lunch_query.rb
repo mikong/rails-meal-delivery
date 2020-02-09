@@ -7,7 +7,7 @@ class PaidLunchQuery
   end
 
   def call
-    restaurants = RandomLunchQuery.new({ tag_ids: @tag_quantities.keys }).call
+    restaurants = RandomLunchQuery.new(tag_ids: @tag_quantities.keys).call
 
     restaurants.select do |restaurant|
       sum = Money.new(0)

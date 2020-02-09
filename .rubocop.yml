@@ -13,11 +13,18 @@ Layout/ArgumentAlignment:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
+Style/AsciiComments:
+  Exclude:
+    - 'config/initializers/money.rb'
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/Documentation:
   Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
 
 Style/SymbolArray:
   Enabled: false
