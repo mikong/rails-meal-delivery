@@ -67,9 +67,10 @@ class MenuItem < ApplicationRecord
 
   def add_lowest_price
     tagging = find_restaurant_tagging
-    if tagging.lowest_price > price
-      tagging.update(lowest_price: price, lowest_item: self)
-    end
+
+    return unless tagging.lowest_price > price
+
+    tagging.update(lowest_price: price, lowest_item: self)
   end
 
   def update_lowest_price

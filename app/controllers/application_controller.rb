@@ -14,25 +14,25 @@ class ApplicationController < ActionController::Base
   def current_user
     return @current_user if defined?(@current_user)
 
-    @current_user = current_user_session && current_user_session.user
+    @current_user = current_user_session&.user
   end
 
   def require_login
-    unless current_user
-      flash[:notice] = t('login.required')
-      redirect_to login_path
-    end
+    return if current_user
+
+    flash[:notice] = t('login.required')
+    redirect_to login_path
   end
 
   def require_logout
-    if current_user
-      flash[:notice] = t('logout.required')
-      redirect_to_admin_home
-    end
+    return unless current_user
+
+    flash[:notice] = t('logout.required')
+    redirect_to_admin_home
   end
 
   def logged_in?
-    !!current_user
+    current_user.present?
   end
 
   def redirect_to_admin_home
