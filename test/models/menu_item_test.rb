@@ -18,60 +18,30 @@ class MenuItemTest < ActiveSupport::TestCase
     assert menu_item.persisted?
   end
 
-  test 'should increment tagging count' do
-    menu_item = create(:menu_item,
-      restaurant: @restaurant,
-      tag: tags(:meat))
-    tagging = menu_item.find_restaurant_tagging
-    assert_equal 1, tagging.taggings_count
+  test 'should create tagging on create of first item' do
+    attrs = { restaurant: @restaurant, tag: tags(:meat) }
+    create(:menu_item, attrs)
+    tagging = Tagging.find_by(attrs)
+    assert_not_nil tagging
 
-    create(:menu_item,
-      restaurant: @restaurant,
-      tag: tags(:meat))
-    tagging.reload
-    assert_equal 2, tagging.taggings_count
+    create(:menu_item, attrs)
+    taggings = Tagging.where(attrs)
+    assert_equal 1, taggings.size
   end
 
-  test 'should decrement tagging count' do
-    menu_items = create_list(:menu_item, 3,
-      restaurant: @restaurant,
-      tag: tags(:chicken))
-    tagging = menu_items.first.find_restaurant_tagging
-    assert_equal 3, tagging.taggings_count
+  test 'should delete tagging on delete of last item' do
+    attrs = { restaurant: @restaurant, tag: tags(:chicken) }
+    menu_items = create_list(:menu_item, 2, attrs)
+    tagging = Tagging.find_by(attrs)
+    assert_not_nil tagging
 
     menu_items.pop.destroy
     tagging.reload
-    assert_equal 2, tagging.taggings_count
-
-    menu_items.pop.destroy
-    tagging.reload
-    assert_equal 1, tagging.taggings_count
 
     menu_items.pop.destroy
     assert_raises(ActiveRecord::RecordNotFound) do
       tagging.reload
     end
-  end
-
-  test 'should update tagging count on tag change' do
-    fish_dishes = create_list(:menu_item, 2,
-      restaurant: @restaurant,
-      tag: tags(:fish))
-    vegan_dishes = create_list(:menu_item, 2,
-      restaurant: @restaurant,
-      tag: tags(:vegan))
-
-    fish_tagging = fish_dishes.first.find_restaurant_tagging
-    assert_equal 2, fish_tagging.taggings_count
-    vegan_tagging = vegan_dishes.first.find_restaurant_tagging
-    assert_equal 2, vegan_tagging.taggings_count
-
-    fish_dish = fish_dishes.pop
-    fish_dish.update(tag: tags(:vegan))
-    fish_tagging.reload
-    assert_equal 1, fish_tagging.taggings_count
-    vegan_tagging.reload
-    assert_equal 3, vegan_tagging.taggings_count
   end
 
   test 'should track cheapest when adding items' do
