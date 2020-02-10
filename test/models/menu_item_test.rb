@@ -73,4 +73,67 @@ class MenuItemTest < ActiveSupport::TestCase
     vegan_tagging.reload
     assert_equal 3, vegan_tagging.taggings_count
   end
+
+  test 'should track cheapest when adding items' do
+    attrs = { restaurant: @restaurant, tag: tags(:vegetarian) }
+    menu_item = create(:menu_item, attrs.merge(price: 5))
+
+    tagging = menu_item.find_restaurant_tagging
+    assert_equal menu_item, tagging.lowest_item
+
+    create(:menu_item, attrs.merge(price: 10))
+    tagging.reload
+    assert_equal menu_item, tagging.lowest_item
+
+    cheaper_item = create(:menu_item, attrs.merge(price: 3))
+    tagging.reload
+    assert_equal cheaper_item, tagging.lowest_item
+  end
+
+  test 'should track cheapest when deleting items' do
+    attrs = { restaurant: @restaurant, tag: tags(:vegan) }
+    low = create(:menu_item, attrs.merge(price: 3))
+    mid = create(:menu_item, attrs.merge(price: 5))
+    high = create(:menu_item, attrs.merge(price: 7))
+
+    tagging = mid.find_restaurant_tagging
+    assert_equal low, tagging.lowest_item
+
+    high.destroy
+    tagging.reload
+    assert_equal low, tagging.lowest_item
+
+    low.destroy
+    tagging.reload
+    assert_equal mid, tagging.lowest_item
+  end
+
+  test 'should track cheapest when price changes' do
+    attrs = { restaurant: @restaurant, tag: tags(:meat) }
+    item_a = create(:menu_item, attrs.merge(price: 5))
+    item_b = create(:menu_item, attrs.merge(price: 10))
+
+    tagging = item_b.find_restaurant_tagging
+    assert_equal item_a, tagging.lowest_item
+
+    # Cheapest changes price but still cheapest
+    item_a.update(price: rand(3..7))
+    tagging.reload
+    assert_equal item_a, tagging.lowest_item
+
+    # More expensive changes price but still more expensive
+    item_b.update(price: rand(8..12))
+    tagging.reload
+    assert_equal item_a, tagging.lowest_item
+
+    # Cheapest becomes more expensive
+    item_a.update(price: 15)
+    tagging.reload
+    assert_equal item_b, tagging.lowest_item
+
+    # More expensive becomes cheapest
+    item_a.update(price: 7)
+    tagging.reload
+    assert_equal item_a, tagging.lowest_item
+  end
 end
