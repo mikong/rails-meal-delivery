@@ -52,4 +52,25 @@ class MenuItemTest < ActiveSupport::TestCase
       tagging.reload
     end
   end
+
+  test 'should update tagging count on tag change' do
+    fish_dishes = create_list(:menu_item, 2,
+      restaurant: @restaurant,
+      tag: tags(:fish))
+    vegan_dishes = create_list(:menu_item, 2,
+      restaurant: @restaurant,
+      tag: tags(:vegan))
+
+    fish_tagging = fish_dishes.first.find_restaurant_tagging
+    assert_equal 2, fish_tagging.taggings_count
+    vegan_tagging = vegan_dishes.first.find_restaurant_tagging
+    assert_equal 2, vegan_tagging.taggings_count
+
+    fish_dish = fish_dishes.pop
+    fish_dish.update(tag: tags(:vegan))
+    fish_tagging.reload
+    assert_equal 1, fish_tagging.taggings_count
+    vegan_tagging.reload
+    assert_equal 3, vegan_tagging.taggings_count
+  end
 end
