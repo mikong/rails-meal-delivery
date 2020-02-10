@@ -13,7 +13,7 @@ class MenuItem < ApplicationRecord
   after_update :check_tagging, :update_lowest_price
 
   def find_restaurant_tagging
-    Tagging.find_by(restaurant: self.restaurant, tag: self.tag)
+    Tagging.find_by(restaurant: restaurant, tag: tag)
   end
 
   private
@@ -25,27 +25,27 @@ class MenuItem < ApplicationRecord
 
   def create_tagging
     Tagging.create(
-      restaurant: self.restaurant,
-      tag: self.tag,
+      restaurant: restaurant,
+      tag: tag,
       taggings_count: 1,
-      lowest_price: self.price,
+      lowest_price: price,
       lowest_item: self
     )
   end
 
   def decrement_tagging
-    decrement_tagging_by(self.tag.id)
+    decrement_tagging_by(tag.id)
   end
 
   def decrement_tagging_by(tid)
-    tagging = Tagging.find_by(restaurant: self.restaurant, tag_id: tid)
+    tagging = Tagging.find_by(restaurant: restaurant, tag_id: tid)
     return  if tagging.nil?
 
     if tagging.taggings_count > 1
-      if tagging.lowest_item_id == self.id
-        cheapest = self.restaurant.menu_items
-          .where(tag_id: self.tag.id)
-          .where.not(id: self.id)
+      if tagging.lowest_item_id == id
+        cheapest = restaurant.menu_items
+          .where(tag_id: tag.id)
+          .where.not(id: id)
           .order(:price_cents)
           .first
         tagging.lowest_price = cheapest.price
@@ -59,24 +59,24 @@ class MenuItem < ApplicationRecord
   end
 
   def check_tagging
-    return unless self.tag_id_previously_changed?
+    return unless tag_id_previously_changed?
 
-    decrement_tagging_by(self.tag_id_previous_change[0])
+    decrement_tagging_by(tag_id_previous_change[0])
     increment_tagging
   end
 
   def add_lowest_price
     tagging = find_restaurant_tagging
-    if tagging.lowest_price > self.price
-      tagging.update(lowest_price: self.price, lowest_item: self)
+    if tagging.lowest_price > price
+      tagging.update(lowest_price: price, lowest_item: self)
     end
   end
 
   def update_lowest_price
     tagging = find_restaurant_tagging
 
-    cheapest = self.restaurant.menu_items
-      .where(tag_id: self.tag.id)
+    cheapest = restaurant.menu_items
+      .where(tag_id: tag.id)
       .order(:price_cents)
       .first
 
