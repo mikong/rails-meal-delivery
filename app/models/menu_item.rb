@@ -39,23 +39,19 @@ class MenuItem < ApplicationRecord
 
   def decrement_tagging_by(tid)
     tagging = Tagging.find_by(restaurant: restaurant, tag_id: tid)
-    return  if tagging.nil?
+    return if tagging.nil?
 
-    if tagging.taggings_count > 1
-      if tagging.lowest_item_id == id
-        cheapest = restaurant.menu_items
-          .where(tag_id: tag.id)
-          .where.not(id: id)
-          .order(:price_cents)
-          .first
-        tagging.lowest_price = cheapest.price
-        tagging.lowest_item = cheapest
-      end
-      tagging.decrement(:taggings_count, 1)
-      tagging.save
-    else
+    unless tagging.taggings_count > 1
       tagging.destroy
+      return
     end
+
+    if tagging.lowest_item_id == id
+      cheapest = cheapest_items.where.not(id: id).first
+      tagging.assign_lowest(cheapest)
+    end
+    tagging.decrement(:taggings_count, 1)
+    tagging.save
   end
 
   def check_tagging
@@ -70,17 +66,21 @@ class MenuItem < ApplicationRecord
 
     return unless tagging.lowest_price > price
 
-    tagging.update(lowest_price: price, lowest_item: self)
+    tagging.assign_lowest(self)
+    tagging.save
   end
 
   def update_lowest_price
     tagging = find_restaurant_tagging
+    cheapest = cheapest_items.first
 
-    cheapest = restaurant.menu_items
+    tagging.assign_lowest(cheapest)
+    tagging.save
+  end
+
+  def cheapest_items
+    restaurant.menu_items
       .where(tag_id: tag.id)
       .order(:price_cents)
-      .first
-
-    tagging.update(lowest_price: cheapest.price, lowest_item: cheapest)
   end
 end

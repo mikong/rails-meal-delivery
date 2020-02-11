@@ -7,6 +7,11 @@ class MenuItemTest < ActiveSupport::TestCase
     @restaurant = create(:restaurant)
   end
 
+  def assert_lowest_item(menu_item, tagging)
+    assert_equal menu_item, tagging.lowest_item
+    assert_equal menu_item.price, tagging.lowest_price
+  end
+
   test 'should save valid menu item' do
     menu_item = MenuItem.new(
       name: 'Bulalo',
@@ -84,26 +89,26 @@ class MenuItemTest < ActiveSupport::TestCase
     item_b = create(:menu_item, attrs.merge(price: 10))
 
     tagging = item_b.find_restaurant_tagging
-    assert_equal item_a, tagging.lowest_item
+    assert_lowest_item item_a, tagging
 
     # Cheapest changes price but still cheapest
     item_a.update(price: rand(3..7))
     tagging.reload
-    assert_equal item_a, tagging.lowest_item
+    assert_lowest_item item_a, tagging
 
     # More expensive changes price but still more expensive
     item_b.update(price: rand(8..12))
     tagging.reload
-    assert_equal item_a, tagging.lowest_item
+    assert_lowest_item item_a, tagging
 
     # Cheapest becomes more expensive
     item_a.update(price: 15)
     tagging.reload
-    assert_equal item_b, tagging.lowest_item
+    assert_lowest_item item_b, tagging
 
     # More expensive becomes cheapest
     item_a.update(price: 7)
     tagging.reload
-    assert_equal item_a, tagging.lowest_item
+    assert_lowest_item item_a, tagging
   end
 end
