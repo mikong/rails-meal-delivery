@@ -47,7 +47,7 @@ class MenuItem < ApplicationRecord
     end
 
     if tagging.lowest_item_id == id
-      cheapest = cheapest_items.where.not(id: id).first
+      cheapest = cheapest_items(tid).first
       tagging.assign_lowest(cheapest)
     end
     tagging.decrement(:taggings_count, 1)
@@ -78,9 +78,9 @@ class MenuItem < ApplicationRecord
     tagging.save
   end
 
-  def cheapest_items
+  def cheapest_items(tid = tag.id)
     restaurant.menu_items
-      .where(tag_id: tag.id)
+      .where(tag_id: tid)
       .order(:price_cents)
   end
 end

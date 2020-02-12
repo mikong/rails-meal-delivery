@@ -83,6 +83,25 @@ class MenuItemTest < ActiveSupport::TestCase
     assert_equal mid, tagging.lowest_item
   end
 
+  test 'should track cheapest when changing tags' do
+    attrs = { restaurant: @restaurant, tag: tags(:meat) }
+    not_meat = create(:menu_item, attrs.merge(price: 5))
+    meat = create(:menu_item, attrs.merge(price: 10))
+    chicken = create(:menu_item, attrs.merge(tag: tags(:chicken), price: 15))
+
+    meat_tagging = meat.find_restaurant_tagging
+    assert_lowest_item not_meat, meat_tagging
+    chicken_tagging = chicken.find_restaurant_tagging
+    assert_lowest_item chicken, chicken_tagging
+
+    # Change tag from meat to chicken
+    not_meat.update(tag: tags(:chicken))
+    meat_tagging.reload
+    assert_lowest_item meat, meat_tagging
+    chicken_tagging.reload
+    assert_lowest_item not_meat, chicken_tagging
+  end
+
   test 'should track cheapest when price changes' do
     attrs = { restaurant: @restaurant, tag: tags(:meat) }
     item_a = create(:menu_item, attrs.merge(price: 5))
